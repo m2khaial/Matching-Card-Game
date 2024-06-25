@@ -100,3 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 resetBoard();
             }, 1500);
         }
+        function resetBoard() {
+            [firstCard, secondCard, lockBoard] = [null, null, false];
+        }
+
+        document.querySelectorAll('.card').forEach(card => card.addEventListener('click', flipCard));
+    }
+});

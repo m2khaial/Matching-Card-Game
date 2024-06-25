@@ -21,3 +21,39 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add more foods
         ]
     };
+    const difficulties = {
+        easy: 5,   // 5 pairs = 10 cards
+        medium: 10, // 10 pairs = 20 cards
+        hard: 15   // 15 pairs = 30 cards
+    };
+
+    document.getElementById('startGame').addEventListener('click', startGame);
+
+    function startGame() {
+        const difficulty = document.getElementById('difficulty').value;
+        const cardStyle = document.getElementById('cardStyle').value;
+        const cardCount = difficulties[difficulty];
+        const selectedCards = cardStyles[cardStyle].slice(0, cardCount);
+        const gameBoard = document.querySelector('.game-board');
+        gameBoard.innerHTML = '';
+        gameBoard.style.gridTemplateColumns = `repeat(${Math.ceil(Math.sqrt(cardCount * 2))}, 100px)`;
+
+        let cards = [...selectedCards, ...selectedCards];
+        cards.sort(() => 0.5 - Math.random());
+
+        cards.forEach(card => {
+            let cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+            cardElement.dataset.name = card.name;
+
+            let front = document.createElement('div');
+            front.classList.add('front');
+            front.style.backgroundImage = `url(${card.img})`;
+
+            let back = document.createElement('div');
+            back.classList.add('back');
+
+            cardElement.appendChild(front);
+            cardElement.appendChild(back);
+            gameBoard.appendChild(cardElement);
+        });

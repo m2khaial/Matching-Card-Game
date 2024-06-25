@@ -57,3 +57,32 @@ document.addEventListener('DOMContentLoaded', () => {
             cardElement.appendChild(back);
             gameBoard.appendChild(cardElement);
         });
+        initializeGame();
+    }
+
+    function initializeGame() {
+        let firstCard, secondCard;
+        let lockBoard = false;
+
+        function flipCard() {
+            if (lockBoard) return;
+            if (this === firstCard) return;
+
+            this.classList.add('flip');
+
+            if (!firstCard) {
+                firstCard = this;
+                return;
+            }
+
+            secondCard = this;
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            if (firstCard.dataset.name === secondCard.dataset.name) {
+                disableCards();
+            } else {
+                unflipCards();
+            }
+        }
